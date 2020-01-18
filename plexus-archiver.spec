@@ -30,13 +30,14 @@
 
 Name:           plexus-archiver
 Version:        2.4.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
 URL:            http://plexus.codehaus.org/plexus-components/plexus-archiver/
 Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
 
+Patch0:         0001-fix-fail-when-trying-to-extract-outside-of-dest-dir.patch
 
 BuildArch:      noarch
 
@@ -65,6 +66,7 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
 %mvn_file :%{name} plexus/archiver
 
 %build
@@ -80,6 +82,10 @@ Javadoc for %{name}.
 %doc LICENSE
 
 %changelog
+* Fri Jun  1 2018 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:2.4.2-5
+- Fix arbitrary file write vulnerability
+- Resolves: CVE-2018-1002200
+
 * Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 02.4.2-4
 - Mass rebuild 2013-12-27
 
